@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>India Flight Fare Prediction</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(window).load(function() {
+              console.log("document loaded");
+
+              $.get("{{ url_for('get_source_names') }}",
+                function (data, status) {
+                  console.log("got response for get_source_names request");
+                  console.log(data)
+                  if(data) {
+                      var source = data.source;
+                      console.log(source)
+                      var uiSource = document.getElementById("uiSource");
+                      $('#uiSource').empty();
+                      for(var i in source) {
+                          var opt = new Option(source[i]);
+                          $('#uiSource').append(opt);
+                      }
+                  }
+              });
+
+              $.get("{{ url_for('get_destination_names') }}",
+                function (data, status) {
+                  console.log("got response for get_destination_names request");
+                  console.log(data)
+                  if(data) {
+                      var destination = data.destination;
+                      console.log(destination)
+                      var uiDestination = document.getElementById("uiDestination");
+                      $('#uiDestination').empty();
+                      for(var i in destination) {
+                          var opt = new Option(destination[i]);
+                          $('#uiDestination').append(opt);
+                      }
+                  }
+              });
+
+              $.get("{{ url_for('get_airlines_names') }}",
+                function (data, status) {
+                  console.log("got response for get_airlines_names request");
+                  if(data) {
+                      var airlines = data.airlines;
+                      var uiAirlines = document.getElementById("uiAirlines");
+                      $('#uiAirlines').empty();
+                      for(var i in airlines) {
+                          var opt = new Option(airlines[i]);
+                          $('#uiAirlines').append(opt);
+                      }
+                  }
+              });
+
+              $.get("{{ url_for('get_stop_names') }}",
+                function (data, status) {
+                  console.log("got response for get_stop_names request");
+                  if(data) {
+                      var stop = data.stop;
+                      var uiStop = document.getElementById("uiStop");
+                      $('#uiStop').empty();
+                      for(var i in stop) {
+                          var opt = new Option(stop[i]);
+                          $('#uiStop').append(opt);
+                      }
+                  }
+              });
+            });
+        </script>
+
+
+        <!-- BootStrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+                        <!-- css -->
+        <style>
+            body {
+                background-image: url({{ url_for('static', filename='ipl.jpg') }});
+                background-repeat:no-repeat;
+                background-size: 100% 135%;
+                background-color:  #FADBD8;
+                text-align: center;
+            }
+
+            .navbar {
+                background-color: #000000;
+            }
+
+            form label {
+                font-weight:bold
+            }
+
+            a {
+                color: #f7ff08;
+                text-align: center;
+            }
+
+            a:hover {
+                color: #ff0808;
+              }
+
+            .icon-bar {
+              position: fixed;
+              top: 50%;
+              -webkit-transform: translateY(-50%);
+              -ms-transform: translateY(-50%);
+              transform: translateY(-50%);
+            }
+
+            .icon-bar a{
+              display: block;
+              text-align: center;
+              padding: 16px;
+              transition: all 0.3s ease;
+              color: white;
+              font-size: 20px;
+            }
+
+            .icon-bar a:hover {
+              background-color: #000;
+            }
+            /* Footer */
+            .footer{
+                background-color: #E9E9E9;
+                color: #000000;
+                padding: 0px;
+                text-align: center;
+            }
+
+            .contact-icon{
+                color: #000000;
+                padding: 0px;
+            }
+
+            .contact-icon:hover{
+                color: #a6a19a;
+            }
+
+            .footer-description{
+                margin: 0;
+                font-size: 12px;
+                font-weight: 100;
+            }
+
+    	</style>
+
+
+    </head>
+
+    <body>
+            <!-- As a heading -->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header"></div>
+            </div>
+        </nav>
+
+        <!-- Website Title -->
+        <div class="jumbotron text-center">
+            <h1>Flight Price Prediction</h1>
+            <div class='description'>
+                <p>A Machine Learning Web App, Built with Flask, Deployed using Heroku.</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <form action="/predict" method="POST">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <!-- Source Dropdown -->
+                            <label>Select Source:</label>
+                            <select class="form-control" name="source" id="uiSource" required></select><br>
+                            <option value="{{ selected }}" ></option>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <!-- Destination Dropdown -->
+                            <label>Select Destination:</label>
+                            <select class="form-control" name="destination" id="uiDestination" required></select><br>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <!-- Airline Dropdown -->
+                            <label>Select Airline:</label>
+                            <select class="form-control" name="airlines" id="uiAirlines" required></select><br>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <!-- Date of Journey Input -->
+                            <label for="Date Of Journey">Date Of Journey:</label>
+                            <input type="date" name="doj" class="form-control" placeholder="dd/mm/yyyy" required/>
+                          </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <!-- Total Stops Dropdown -->
+                            <label>Total Stops:</label>
+                            <select class="form-control" name="stop" id="uiStop" required></select><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <!-- Departure Time -->
+                            <label for="Departure Time">Departure Time:</label>
+                            <input type="time" name="dt" class="form-control" title="HH:MM:AM/PM" required/>
+                          </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <!-- Arrival Time -->
+                            <label for="Arrival_Time">Arrival Time:</label>
+                            <input type="time" name="at" class="form-control" title="HH:MM:AM/PM" required/>
+                          </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Predict Fare</button>
+            </form>
+            <br><br>
+            <h3>{{ prediction_text }}</h3>
+        </div>
+        <!-- Footer -->
+       <div class='footer'>
+           <div class="contact">
+               <a target="_blank" href="https://github.com/rishabh7795"><i class="fab fa-github fa-lg contact-icon"></i></a>
+               <a target="_blank" href="https://www.linkedin.com/in/rishabh7795"><i class="fab fa-linkedin fa-lg contact-icon"></i></a>
+           </div>
+           <p class='footer-description'>© Rishabh Choudhary 2020</p>
+       </div>
+
+    </body>
+</html>
+

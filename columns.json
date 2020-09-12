@@ -1,0 +1,9 @@
+{"airlines": ["Air Asia", "Air India", "GoAir", "IndiGo", "Jet Airways", "Multiple carriers", "SpiceJet", "Vistara"],
+  "source": ["Banglore", "Chennai", "Delhi", "Kolkata", "Mumbai"],
+  "destination": ["Banglore", "Cochin", "Delhi", "Hyderabad", "Kolkata", "New Delhi"],
+  "wickets": {"non-stop": 0, "1 stop": 1, "2 stops": 2, "3 stops": 3, "4 stops": 4},
+  "data_columns": ["Air Asia", "Air India", "GoAir", "IndiGo", "Jet Airways", "Multiple carriers", "SpiceJet",
+                   "Banglore_s", "Chennai_s", "Delhi_s", "Kolkata_s", "Banglore_d",
+                   "Cochin_d", "Delhi_d", "Hyderabad_d", "Kolkata_d",
+                   "Journey_Day", "Journey_Month", "Dep_Hour", "Dep_Minute", "Arrival_Hour", "Arrival_Minute",
+                   "Duration_Hour", "Duration_Minute", "Total_Stops"]}
